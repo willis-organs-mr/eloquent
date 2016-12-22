@@ -10,15 +10,16 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\PhoneNumber;
+use App\Topic;
 use Illuminate\Http\Request;
 
+// Pull in Request so you can use User
 Route::get('/', function (Request $request) {
-    
-    // grab current users token
-    // echo $request->user()->token->token;
-    
+    $topic = new Topic;
+    $topic->title = 'Topic four';
+    $topic->user()->associate($request->user());
 
+    $topic->save();
 });
 
 Auth::routes();
