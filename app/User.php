@@ -31,4 +31,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(PhoneNumber::class);
     }
+
+    //user has token
+    public function token()
+    {
+        return $this->hasOne(Token::class);
+    }
 }

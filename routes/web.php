@@ -15,13 +15,13 @@ use Illuminate\Http\Request;
 
 Route::get('/', function (Request $request) {
     
-    $phoneNumbers = PhoneNumber::get();
+    // grab current users token
+    // echo $request->user()->token->token;
+    
 
-    return view('phone.index', compact('phoneNumbers')
-        // ['phoneNumbers' => $phoneNumbers] SAME AS COMPACT
-    );
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+Route::get('/mailing/unsubscribe/{token}', 'Mailing\SubscriptionController@unsubscribe');
