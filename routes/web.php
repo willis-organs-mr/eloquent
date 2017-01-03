@@ -11,18 +11,31 @@
 |
 */
 use App\Topic;
+use App\Post;
 use Illuminate\Http\Request;
 
 // Pull in Request so you can use User
 Route::get('/', function (Request $request) {
-    $topic = new Topic;
-    $topic->title = 'Topic four';
-    $topic->user()->associate($request->user());
+    
+    $topic = Topic::find(4);
 
-    $topic->save();
+    $post = new Post;
+    $post->body = 'Reply three';
+    $post->user()->associate($request->user());
+    
+    // $topic->posts()->save($post);
+    // or
+    $post->topic()->associate($topic);
+    $post->save();
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-Route::get('/mailing/unsubscribe/{token}', 'Mailing\SubscriptionController@unsubscribe');
+Route::get('/topics', 'TopicController@index');
+Route::get('/posts', 'PostController@index');
+Route::get('/topics/{topic}', 'TopicController@show')->name('topics.show');
+Route::get('/posts/{post}', 'PostController@show')->name('posts.show');
+
+Route::get('/user/topics', 'UserTopicController@index');
+Route::get('/user/posts', 'UserPostController@index');
